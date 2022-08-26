@@ -46,32 +46,33 @@ def create_poll(host, user, password, database):
                     NOW(),
                     NOW() + INTERVAL 7 DAY,
                     "Headmin Election poll",
-                    "Please rank the candidates in order you would like to see them as headadmins, highest being the one you like best, You can click on a headadmin candidates name to be taken to their forum thread for their platform.</br>  <a href=\"https://tgstation13.org/phpBB/viewtopic.php?f=38&t=9965\">You can find more instructions on voting here.</a>",
+                    %s,
                     0,
                     NULL,
                     "optimumtact",
-                    INET_ATON(127.0.0.1),
+                    INET_ATON('127.0.0.1'),
                     NULL,
                     1,
                     1,
                     0
                 )
                 '''
-            cursor.execute(sql)
+            subtitle = 'Please rank the candidates in order you would like to see them as headadmins, highest being the one you like best, You can click on a headadmin candidates name to be taken to their forum thread for their platform.</br>  <a href="https://tgstation13.org/phpBB/viewtopic.php?f=38&t=9965">You can find more instructions on voting here.</a>''
+            cursor.execute(sql, subtitle)
             poll_id = cursor.lastrowid
             click.echo(f"Poll id was set: {poll_id}")
             for vote in votes:
                 click.echo("Inserting vote");
                 qsql = f'''
                 INSERT INTO poll_option (
-                    pollid
+                    pollid,
                     text,
                     default_percentage_calc,
-                    deleted,
+                    deleted
                 )
                 VALUES (
                     {poll_id},
-                    {vote},
+                    '{vote}',
                     1,
                     0
                 )
