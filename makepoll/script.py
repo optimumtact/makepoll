@@ -46,7 +46,7 @@ def create_poll(host, user, password, database):
                     NOW(),
                     NOW() + INTERVAL 7 DAY,
                     "Headmin Election poll",
-                    "Please rank the candidates in order you would like to see them as headadmins, highest being the one you like best, You can click on a headadmin candidates name to be taken to their forum thread for their platform.</br>  <a href="https://tgstation13.org/phpBB/viewtopic.php?f=38&t=9965">You can find more instructions on voting here.</a>",
+                    "Please rank the candidates in order you would like to see them as headadmins, highest being the one you like best, You can click on a headadmin candidates name to be taken to their forum thread for their platform.</br>  <a href=\"https://tgstation13.org/phpBB/viewtopic.php?f=38&t=9965\">You can find more instructions on voting here.</a>",
                     0,
                     NULL,
                     "optimumtact",
