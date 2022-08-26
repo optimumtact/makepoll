@@ -14,7 +14,10 @@ def cli():
 def create_poll(host, user, password, database):
     """ Create the poll as required """
 
-    votes = ["optimumtact", "The best guy ever"]
+    votes = [
+        ["optimumtact", "The best guy ever"],
+        ["test", "https://google.com"],
+    ]
     click.echo(f"Creating your dumb poll")
     connection = pymysql.connect(
             host=host,
@@ -57,7 +60,7 @@ def create_poll(host, user, password, database):
                     0
                 )
                 '''
-            subtitle = 'Please rank the candidates in order you would like to see them as headadmins, highest being the one you like best, You can click on a headadmin candidates name to be taken to their forum thread for their platform.</br>  <a href="https://tgstation13.org/phpBB/viewtopic.php?f=38&t=9965">You can find more instructions on voting here.</a>''
+            subtitle = 'Please rank the candidates in order you would like to see them as headadmins <a href="https://tgstation13.org/phpBB/viewtopic.php?f=38&t=9965">You can find more instructions on voting here.</a>'
             cursor.execute(sql, subtitle)
             poll_id = cursor.lastrowid
             click.echo(f"Poll id was set: {poll_id}")
@@ -72,14 +75,15 @@ def create_poll(host, user, password, database):
                 )
                 VALUES (
                     {poll_id},
-                    '{vote}',
+                    %s,
                     1,
                     0
                 )
                 '''
-                cursor.execute(qsql)
+                vote_text = f"<a href=\"{vote[1]}\">{vote[0]}</a>"
+                cursor.execute(qsql, vote_text)
                 click.echo(f"Inserted vote question {cursor.lastrowid}")
-
+            connection.commit()
 
 if __name__ == '__main__':
     cli()
