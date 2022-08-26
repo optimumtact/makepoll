@@ -15,8 +15,18 @@ def create_poll(host, user, password, database):
     """ Create the poll as required """
 
     votes = [
-        ["optimumtact", "The best guy ever"],
-        ["test", "https://google.com"],
+        ["iamgoofball", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32316"],
+        ["Omega_DarkPotato", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32272"],
+        ["BallastMonsterGnarGnar/Gupta", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32279"],
+        ["NamelessFairy", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32314"],
+        ["Riggle", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32269"],
+        ["Domitius", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32320"],
+        ["Iain0", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32285"],
+        ["San7890", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32266"],
+        ["RaveRadbury", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32267"],
+        ["Fikou", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32274"],
+        ["PositiveEntropy/Imaginos", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32270"],
+        ["Kieth4/Lukas Beedell", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32268"]
     ]
     click.echo(f"Creating your dumb poll")
     connection = pymysql.connect(
