@@ -15,18 +15,20 @@ def create_poll(host, user, password, database):
     """ Create the poll as required """
 
     votes = [
-        ["iamgoofball", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32316"],
-        ["Omega_DarkPotato", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32272"],
-        ["BallastMonsterGnarGnar/Gupta", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32279"],
-        ["NamelessFairy", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32314"],
-        ["Riggle", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32269"],
-        ["Domitius", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32320"],
-        ["Iain0", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32285"],
-        ["San7890", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32266"],
-        ["RaveRadbury", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32267"],
-        ["Fikou", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32274"],
-        ["PositiveEntropy/Imaginos", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32270"],
-        ["Kieth4/Lukas Beedell", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=32268"]
+        ["Rave Radbury", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33367"],
+        ["Itseasytosee", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33404"],
+        ["Namelessfairy", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33388"],
+        ["iwishforducks", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33373"],
+        ["iain0", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33417"],
+        ["Timberpoes", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33361"],
+        ["keith4", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33360"],
+        ["Striders13", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33362"],
+        ["Thedragmeme", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33358"],
+        ["Iamgoofball", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33364"],
+        ["Empress Maia", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33375"],
+        ["AwkwardStereo", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33356"],
+        ["CMDR Gungnir", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33384"],
+        ["Texter555", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33400"],
     ]
     click.echo(f"Creating your dumb poll")
     connection = pymysql.connect(
