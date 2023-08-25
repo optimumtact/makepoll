@@ -15,20 +15,20 @@ def create_poll(host, user, password, database):
     """ Create the poll as required """
 
     votes = [
-        ["iain0", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33417"],
-        ["Itseasytosee", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33404"],
-        ["Texter555", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33400"],
-        ["Namelessfairy", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33388"],
-        ["CMDR Gungnir", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33384"],
-        ["Empress Maia", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33375"],
-        ["iwishforducks", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33373"],
-        ["Rave Radbury", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33367"],
-        ["Iamgoofball", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33364"],
-        ["Striders13", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33362"],
-        ["Timberpoes", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33361"],
-        ["keith4", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33360"],
-        ["Thedragmeme", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33358"],
-        ["AwkwardStereo", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=33356"],
+        ["Cheshify", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34692"],
+        ["Kinnebian", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34687"],
+        ["Fikou", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34689"],
+        ["Armodia/Charley Quinn", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34691"],
+        ["GeneralThrax", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34695"],
+        ["WineAllWine", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34700"],
+        ["iwishforducks", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34703"],
+        ["ANIMETIDDIES/Pepper", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34708"],
+        ["SightId2", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34717"],
+        ["xPokee", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34721"],
+        ["iain0", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34722"],
+        ["Bugstep/Palladium", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34726"],
+        ["Kubisopplay" , "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34731"]
+        ["AwkwardStereo", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34732"],
     ]
     click.echo(f"Creating your dumb poll")
     connection = pymysql.connect(
@@ -77,7 +77,7 @@ def create_poll(host, user, password, database):
             poll_id = cursor.lastrowid
             click.echo(f"Poll id was set: {poll_id}")
             for vote in votes:
-                click.echo("Inserting vote");
+                click.echo("Inserting vote")
                 qsql = f'''
                 INSERT INTO poll_option (
                     pollid,
