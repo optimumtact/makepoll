@@ -27,7 +27,7 @@ def create_poll(host, user, password, database):
         ["xPokee", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34721"],
         ["iain0", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34722"],
         ["Bugstep/Palladium", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34726"],
-        ["Kubisopplay" , "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34731"]
+        ["Kubisopplay", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34731"],
         ["AwkwardStereo", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34732"],
     ]
     click.echo(f"Creating your dumb poll")
