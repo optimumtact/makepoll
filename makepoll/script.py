@@ -24,7 +24,7 @@ def create_poll(host, user, password, database):
         ["iwishforducks", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34703"],
         ["ANIMETIDDIES/Pepper", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34708"],
         ["JohnFulpWillard", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34710"],
-        ["SightId2", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34717"],
+        ["Sightld2", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34717"],
         ["xPokee", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34721"],
         ["iain0", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34722"],
         ["Bugstep/Palladium", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34726"],
