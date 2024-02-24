@@ -15,21 +15,13 @@ def create_poll(host, user, password, database):
     """ Create the poll as required """
 
     votes = [
-        ["Cheshify", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34692"],
-        ["Kinnebian", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34687"],
-        ["Fikou", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34689"],
-        ["Armodia/Charley Quinn", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34691"],
-        ["GeneralThrax", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34695"],
-        ["WineAllWine", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34700"],
-        ["iwishforducks", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34703"],
-        ["ANIMETIDDIES/Pepper", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34708"],
-        ["JohnFulpWillard", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34710"],
-        ["Sightld2", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34717"],
-        ["xPokee", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34721"],
-        ["iain0", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34722"],
-        ["Bugstep/Palladium", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34726"],
-        ["Kubisopplay", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34731"],
-        ["AwkwardStereo", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=34732"],
+        ["Rex9001", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=35753"],
+        ["kieth4", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=35754"],
+        ["Timberpoes", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=35758"],
+        ["TheBibleMelts", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=35760"],
+        ["Kinnebian", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=35767"],
+        ["Tegun", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=35776"],
+        ["Tattle", "https://tgstation13.org/phpBB/viewtopic.php?f=38&t=35777"],
     ]
     click.echo(f"Creating your dumb poll")
     connection = pymysql.connect(
