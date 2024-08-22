@@ -1,5 +1,5 @@
 import json
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 import click
 import pymysql
@@ -8,21 +8,39 @@ from bs4 import BeautifulSoup
 from unidecode import unidecode
 
 
-def get_query_params(url):
-    """Given a generic url, return the query parameters using the urllib parser"""
-    # Parse the URL
+def get_final_url(url):
+    # Parse the URL into components
     parsed_url = urlparse(url)
 
     # Extract the query component
     query_string = parsed_url.query
-
     # Parse the query string into a dictionary
     params = parse_qs(query_string)
 
     # Convert the list values to single values (if you want)
-    params_dict = {k: v[0] if len(v) == 1 else v for k, v in params.items()}
+    url_params = {k: v[0] if len(v) == 1 else v for k, v in params.items()}
 
-    return params_dict
+    # Strip existing query parameters and build a new query string with out the sid
+    new_params = {
+        "t": url_params["t"],
+        "f": url_params["f"],
+    }
+
+    # Create the new query string
+    new_query = urlencode(new_params)
+
+    # Rebuild the URL with the new query string
+    new_url = urlunparse(
+        (
+            parsed_url.scheme,
+            parsed_url.netloc,
+            parsed_url.path,
+            parsed_url.params,
+            new_query,  # Replacing the query part
+            parsed_url.fragment,
+        )
+    )
+    return int(url_params["t"]), new_url
 
 
 def ignore_topic(class_list):
@@ -67,9 +85,9 @@ def candidates(url):
                 text = unidecode(topic_title.get_text(strip=True))
                 href = topic_title.get("href", "No href attribute")
                 url = href.replace(".", base, 1)
-                params = get_query_params(url)
+                thread_id, url = get_final_url(url)
                 # build the output dictionary, we want to sort by thread id, so use that as the key at first
-                final[int(params["t"])] = (text, href.replace(".", base, 1))
+                final[thread_id] = (text, url)
 
             else:
                 pass
