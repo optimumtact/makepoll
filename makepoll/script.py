@@ -9,6 +9,7 @@ from unidecode import unidecode
 
 
 def get_query_params(url):
+    """Given a generic url, return the query parameters using the urllib parser"""
     # Parse the URL
     parsed_url = urlparse(url)
 
@@ -24,6 +25,18 @@ def get_query_params(url):
     return params_dict
 
 
+def ignore_topic(class_list):
+    """Checks if we should ignore this topic"""
+    for item in class_list:
+        # Global thread, ignore it
+        if item.find("global_") != -1:
+            return True
+        # Locked, user dropped out, or it's an admin thread
+        if item.find("read_locked") != -1:
+            return True
+    return False
+
+
 @click.group()
 def cli():
     pass
@@ -35,17 +48,6 @@ def candidates(url):
     """Fetches candidate threads and sets up the url for them and dumps to json for input into the make poll command"""
     # Base forum url.
     base = "https://tgstation13.org/phpBB"
-    blacklisted_thread_ids = [
-        "36731",
-        "3371",
-        "336",
-        "28546",
-        "9965",
-        "21851",
-        "15742",
-        "12685",
-        "12617",
-    ]
 
     try:
         response = requests.get(url)
@@ -56,9 +58,7 @@ def candidates(url):
 
     soup = BeautifulSoup(response.text, "html.parser")
     dl_elements = soup.find_all("dl", class_="row-item")
-    filtered_elements = [
-        dl for dl in dl_elements if not "topic_read_locked" in dl.get("class")
-    ]
+    filtered_elements = [dl for dl in dl_elements if not ignore_topic(dl.get("class"))]
     final = {}
     if filtered_elements:
         for idx, dl in enumerate(filtered_elements, start=1):
@@ -68,19 +68,23 @@ def candidates(url):
                 href = topic_title.get("href", "No href attribute")
                 url = href.replace(".", base, 1)
                 params = get_query_params(url)
-                if params["t"] in blacklisted_thread_ids:
-                    click.echo(f"Ignoring thread {text} - {url}")
-                    continue
-                click.echo(f"  - Title: {text}")
-                click.echo(f"  - URL: {url}")
-                # build the output dictionary
-                final[text] = href.replace(".", base, 1)
+                # build the output dictionary, we want to sort by thread id, so use that as the key at first
+                final[int(params["t"])] = (text, href.replace(".", base, 1))
+
             else:
-                click.echo("  - No <a> element with class 'topic-title' found.")
+                pass
+                # click.echo("  - No <a> element with class 'topic-title' found.")
     else:
         click.echo("No <dl> elements with class 'row-item' found.")
+
+    # Sort by threads thread order with oldest thread first
+    sorted_dict = dict(sorted(final.items()))
+    true_final = dict()
+    for key, (text, url) in sorted_dict.items():
+        click.echo(f"{text} - {url}")
+        true_final[text] = url
     with open("votes.json", "w") as json_file:
-        json.dump(final, json_file, indent=4)
+        json.dump(true_final, json_file, indent=4)
 
 
 @cli.command()
