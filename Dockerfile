@@ -1,4 +1,4 @@
-FROM python:3.9.13-slim-buster AS development_build
+FROM python:3.10-slim-buster AS development_build
 
 ARG YOUR_ENV
 
@@ -9,7 +9,7 @@ ENV YOUR_ENV=${YOUR_ENV} \
   PIP_NO_CACHE_DIR=off \
   PIP_DISABLE_PIP_VERSION_CHECK=on \
   PIP_DEFAULT_TIMEOUT=100 \
-  POETRY_VERSION=1.0.0
+  POETRY_VERSION=1.5.1
 
 # System deps:
 RUN pip install "poetry==$POETRY_VERSION"
@@ -20,7 +20,7 @@ COPY poetry.lock pyproject.toml /code/
 
 # Project initialization:
 RUN poetry config virtualenvs.create false \
-  && poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
+  && poetry install  --no-interaction --no-ansi --no-dev
 
 # Creating folders, and files for a project:
 COPY . /code
