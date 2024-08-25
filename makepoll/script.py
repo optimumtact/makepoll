@@ -169,10 +169,11 @@ def createpoll(host, user, password, database):
                     )
                     """
                 subtitle = 'Please rank the candidates in order you would like to see them as headadmins <a target="_blank" href="https://tgstation13.org/phpBB/viewtopic.php?f=38&t=9965">You can find more instructions on voting here.</a>'
-                cursor.execute(sql, subtitle)
+                click.echo(sql)
+                # cursor.execute(sql, subtitle)
                 poll_id = cursor.lastrowid
                 click.echo(f"Poll id was set: {poll_id}")
-                for vote in votes:
+                for title, thread in votes.items():
                     click.echo("Inserting vote")
                     qsql = f"""
                     INSERT INTO poll_option (
@@ -188,8 +189,9 @@ def createpoll(host, user, password, database):
                         0
                     )
                     """
-                    vote_text = f'<a target="_blank" href="{vote[1]}">{vote[0]}</a>'
-                    cursor.execute(qsql, vote_text)
+                    vote_text = f'<a target="_blank" href="{thread}">{title}</a>'
+                    click.echo(qsql)
+                    # cursor.execute(qsql, vote_text)
                     click.echo(f"Inserted vote question {cursor.lastrowid}")
                 connection.commit()
 
