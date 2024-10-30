@@ -105,6 +105,107 @@ def candidates(url):
         json.dump(true_final, json_file, indent=4)
 
 
+def create_poll_question(cursor, subtitle):
+    sql = f"""
+                INSERT INTO poll_question (
+                    polltype,
+                    created_datetime,
+                    starttime,
+                    endtime,
+                    question,
+                    subtitle,
+                    adminonly,
+                    multiplechoiceoptions,
+                    createdby_ckey,
+                    createdby_ip,
+                    for_trialmin,
+                    dontshow,
+                    allow_revoting,
+                    deleted
+                )
+                VALUES (
+                    "IRV",
+                    NOW(),
+                    NOW(),
+                    NOW() + INTERVAL 7 DAY,
+                    "Headmin Election poll",
+                    %s,
+                    0,
+                    NULL,
+                    "optimumtact",
+                    INET_ATON('127.0.0.1'),
+                    NULL,
+                    1,
+                    1,
+                    0
+                )
+                """
+    cursor.execute(sql, subtitle)
+    poll_id = cursor.lastrowid
+    return poll_id
+
+
+def add_poll_option(cursor, poll_id, text):
+    qsql = f"""
+                INSERT INTO poll_option (
+                    pollid,
+                    text,
+                    default_percentage_calc,
+                    deleted
+                )
+                VALUES (
+                    {poll_id},
+                    %s,
+                    1,
+                    0
+                )
+                """
+    cursor.execute(qsql, text)
+    click.echo(f"Inserted vote question {cursor.lastrowid}")
+
+
+@cli.command()
+@click.option("--host", prompt="Host", help="The mariadb/mysql host address")
+@click.option("--user", prompt="User", help="The mariadb/mysql user name")
+@click.option("--password", prompt="Password", help="The mariadb/mysql user password")
+@click.option("--database", prompt="Database", help="The mariadb/mysql database")
+def createthreatpoll(host, user, password, database):
+    """Create the threat poll as required"""
+
+    """Prompt the user to continue with a y/n response."""
+    response = click.prompt("Do you want to continue? (y/n)", type=str, default="n")
+    if response.lower() not in ("y", "yes"):
+        click.echo("Not continuing")
+        return
+
+    click.echo(f"Creating your dumb poll")
+    connection = pymysql.connect(
+        host=host, user=user, password=password, database=database
+    )
+    threat_levels = [
+        "Green Star - Greenshift",
+        "Blue Star - 0-19 threat",
+        "Yellow Star - 20-39 threat",
+        "Orange Star - 40-65 threat",
+        "Red Star - 66-79 threat",
+        "Black Orbit - 80-99 threat",
+        "Midnight Sun - 100 threat",
+        "Pulsar Orbit - Unknown threat",
+    ]
+
+    with connection:
+        with connection.cursor() as cursor:
+            poll_id = create_poll_question(
+                cursor,
+                "Please rank the different round threat levels in the order you prefer, with most preferred at the top",
+            )
+            click.echo(f"Poll id was set: {poll_id}")
+            for text in threat_levels:
+                add_poll_option(cursor, poll_id, text)
+                click.echo(f"Inserted {text}")
+            connection.commit()
+
+
 @cli.command()
 @click.option("--host", prompt="Host", help="The mariadb/mysql host address")
 @click.option("--user", prompt="User", help="The mariadb/mysql user name")
