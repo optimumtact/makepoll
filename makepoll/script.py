@@ -11,7 +11,6 @@ from unidecode import unidecode
 def get_final_url(url):
     # Parse the URL into components
     parsed_url = urlparse(url)
-
     # Extract the query component
     query_string = parsed_url.query
     # Parse the query string into a dictionary
@@ -23,8 +22,9 @@ def get_final_url(url):
     # Strip existing query parameters and build a new query string with out the sid
     new_params = {
         "t": url_params["t"],
-        "f": url_params["f"],
     }
+    if "f" in url_params:
+        new_params["f"] = url_params["f"],
 
     # Create the new query string
     new_query = urlencode(new_params)
@@ -61,11 +61,11 @@ def cli():
 
 
 @cli.command()
-@click.argument("url", default="https://tgstation13.org/phpBB/viewforum.php?f=38")
+@click.argument("url", default="https://forums.tgstation13.org/viewforum.php?f=38")
 def candidates(url):
     """Fetches candidate threads and sets up the url for them and dumps to json for input into the make poll command"""
     # Base forum url.
-    base = "https://tgstation13.org/phpBB"
+    base = "https://forums.tgstation13.org"
 
     try:
         response = requests.get(url)

@@ -26,7 +26,7 @@ def get_vote_options(connection, pollid):
     sql = """
 SELECT id AS questionid, text AS questiontext
   FROM `poll_option`
- WHERE pollid = %s"""
+ WHERE pollid = %s order by id desc10"""
     vote_options = dict()
     with connection.cursor() as cursor:
         cursor.execute(sql, (pollid))
@@ -39,14 +39,11 @@ SELECT id AS questionid, text AS questiontext
     return vote_options
 
 
-def get_admins_with_ban(connection):
-    sql = """
-        SELECT ckey, rank
-          FROM `admin`
-"""
+def get_admins_with_ban(connection, pollid):
+    sql = """SELECT ckey, adminrank from poll_vote where pollid = %s and adminrank != "Player" group by ckey"""
     ckey_with_ban = []
     with connection.cursor() as cursor:
-        cursor.execute(sql)
+        cursor.execute(sql, pollid)
         result = cursor.fetchall()
         for adminckey, rank in result:
             ranklist = rank.split("+")
@@ -73,18 +70,18 @@ def has_ban(ranklist):
     return any(x in valid_ranks for x in ranklist)
 
 
-def get_valid_ckeys(connection):
-    sql = """
+def get_valid_ckeys(connection, startdate, enddate, livingminutes):
+    sql = f"""
            SELECT ckey
              FROM (
                    SELECT SUM(delta) AS living, ckey
                      FROM `role_time_log`
                     WHERE job = "Living"
-                      AND datetime > DATE('2024-05-12')
-                      AND datetime < DATE('2024-08-12')
+                      AND datetime > DATE('{startdate}')
+                      AND datetime < DATE('{enddate}')
                  GROUP BY ckey
                 ) AS result
-            WHERE living > 400
+            WHERE living > {livingminutes}
             """
     final = []
     with connection.cursor() as cursor:
@@ -123,7 +120,7 @@ def get_vote_options_and_anonymise_plus_add_data(
       ORDER BY ckey, id ASC
     """
     final = []
-    max_count_should_be = 3
+    max_count_should_be = 14
     # vote_options.keys().len
     bad_votes = list()
     ckeycount = Counter()
@@ -134,7 +131,7 @@ def get_vote_options_and_anonymise_plus_add_data(
             anon_count[anon_ckey] += 1
             sortorder = anon_count[anon_ckey]
             ckeycount[ckey] += 1
-            if sortorder >= max_count_should_be:
+            if sortorder > max_count_should_be:
                 if ckey not in bad_votes:
                     bad_votes.append(ckey)
                 # click.echo(f"{sortorder}, {ckey} {anon_ckey}, {max_count_should_be}")
@@ -171,8 +168,10 @@ def process_results(host, user, password, database, pollid):
         host=host, user=user, password=password, database=database
     )
     with connection:
-        ckeys_with_enough_playtime = get_valid_ckeys(connection)
-        admin_ckeys = get_admins_with_ban(connection)
+        ckeys_with_enough_playtime = get_valid_ckeys(
+            connection, "2024-05-12", "2024-08-12", 400
+        )
+        admin_ckeys = get_admins_with_ban(connection, pollid)
         vote_options = get_vote_options(connection, pollid)
         vote_ckeys = get_voter_ckeys(connection, pollid)
         admin_vote = 0
