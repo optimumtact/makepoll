@@ -169,7 +169,7 @@ def process_results(host, user, password, database, pollid):
     )
     with connection:
         ckeys_with_enough_playtime = get_valid_ckeys(
-            connection, "2024-05-12", "2024-08-12", 400
+            connection, "2024-05-12", "2024-08-12", 203
         )
         admin_ckeys = get_admins_with_ban(connection, pollid)
         vote_options = get_vote_options(connection, pollid)
