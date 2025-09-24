@@ -154,7 +154,7 @@ wheels = [
 [[package]]
 name = "makepoll"
 version = "0.1.0"
-source = { editable = "." }
+source = { virtual = "." }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "click" },
